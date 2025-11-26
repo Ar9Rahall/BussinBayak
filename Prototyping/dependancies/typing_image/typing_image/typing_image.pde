@@ -27,9 +27,10 @@ String imagePathway1 = upArrow + folder + bike + fileExtentionJPG;
 PImage image1 = loadImage( imagePathway1 );
 int imageWidth1 = 860; //Hardcoded
 int imageHeight1 = 529; //Hardcoded
-//
+//Aspect Ratio
+//float imageAspectRatio_GreaterOne = () ? : ; //Ternary Operator
 //
 //DIV
 rect( imageDivX, imageDivY, imageDivWidth, imageDivHeight );
 //
-image( image1, imageDivX, imageDivY, imageDivWidth, imageDivHeight );
+image( image1, imageDivX, imageDivY, imageWidth, imageHeight );
