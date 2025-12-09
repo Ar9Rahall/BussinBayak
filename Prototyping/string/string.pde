@@ -33,7 +33,7 @@ String title = "Wahoo!";
 //Teacher ONLY: Starts as an int but converted to a float later
 //Note: pass appHeight into fontSize and resize
 //CAUTION: strange things happen with font sizes, should have WHILE Check and Percentage Decrease Check
-float fontSize = 116.0; //Entire Program
+float fontSize = appHeight; //Entire Program, Algorithm to have smallest font size
 PFont titleFont; //Font Varaible Name, able to have more than one Font
 String harrington = "Harrington"; //Spelling of the Font Matters, see PFont.list() v Create Font above
 //Reminder: only letters ending with numbers, underscore means camelCase or snake_case
@@ -42,12 +42,16 @@ titleFont = createFont(harrington, fontSize);
 //
 println(fontSize, harrington, titleFont); //Inspect PFont-type Varaible for Harddrive Address v value
 fontSize = 83.0; //Change the number until it fits, largest font size
+float fontSizeHarrington = 83.0; //Change the number until it fits, largest font size
+//Hardcoded fontSizeHarrington
 println("Font Size:", fontSize );
 /* Aspect Ratio Manipulations (changes to variables)
  - choose Aspect Ratio that must be mutliplied: fontSize/titleHeight
  - Rewriting fontSize with formulae
  */
 float harringtonAspectRatio = fontSize / stringDivHeight;
+float harringtonAspetRatio = fontSizeHarrington / stringDivHeight;
+fontSize = stringDivHeight*harringtonAspectRatio;
 println("Harrington Aspect Ratio:", harringtonAspectRatio);
 println(); //Skip a line
 //
@@ -56,8 +60,6 @@ rect( stringDivX, stringDivY, stringDivWidth, stringDivHeight );
 //
 //Minimum Lines of code to format, draw text with colour, and become aware of other functions
 //Must be before text()
-//fontSize = 83.0; //Change the number until it fits, largest font size
-println(fontSize, harrington, titleFont);
 
 //Aspect Ratio Calculation
 color purpleInk = #2C08FF; //AP MiniLesson on bit, 8-bit or byte (grey scale, 256), colour
