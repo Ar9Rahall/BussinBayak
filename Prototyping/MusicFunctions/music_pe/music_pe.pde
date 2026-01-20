@@ -1,72 +1,80 @@
+/* Creating Buttons - HoverOver in draw()
+ - Add Minim from Sketch / Import Library / Minim
+ - Display: fullScreen() v. use shorter side as a Square based on fullScreen
+ - DIVs and Global Variables, includes DIV Population
+ */
+//
+//Library - Minim
 import ddf.minim.*;
 import ddf.minim.analysis.*;
 import ddf.minim.effects.*;
 import ddf.minim.signals.*;
 import ddf.minim.spi.*;
 import ddf.minim.ugens.*;
-
-/* Music Subprogram
-*/
 //
 //Global Variables
-Minim minim; //initates entire class
-int numberOfSongs = 1; //Best Practice
-int numberOfSoundEffects = 1; //Best Practice
-AudioPlayer[] playList = new AudioPlayer[ numberOfSongs ];
-AudioPlayer[] soundEffects = new AudioPlayer[ numberOfSoundEffects];
-int currentSong = numberOfSongs - numberOfSongs; //ZERO, Math Property
+//All Global Variables execute first ... A global Variable is a Global Variable
+int appWidth, appHeight;
+float quitDivX, quitDivY, quitDivWidth, quitDivHeight;
+float playDivX, playDivY, playDivWidth, playDivHeight;
+float playSymbolX1, playSymbolY1, playSymbolX2, playSymbolY2, playSymbolX3, playSymbolY3;
 //
-
-
-//Music Loading - STRUCTURED Review
-  minim = new Minim(this); //Manditory
-  String upArrow = "../../../";
-  String musicFolder = "Music/"; //Developer Specific
-  String soundEffectsFolder = "Sound Effects/"; //Developer Specific
-  String normalFolder = "Normal/"; //Developer Specific
-  
-  
-  
-  String songName1 = "Beat_Your_Competition";
-  String songName2 = "Cycles";
-  String songName3 = "Eureka";
-  String songName4 = "Ghost_Walk";
-  String songName5 = "groove";
-  String songName6 = "Newsroom";
-  String songName7 = "Start_Your_Engines";
-  String songName8 = "The_Simplest";
-  
-  
-  
-  
-  
-  String soundEffect1 = "Car_Door_Closing";
-  String fileExtension_mp3 = ".mp3";
+Boolean playButton=false, quitButton=false;
+//
+color resetBackground, resetInk, resetBackgroundDay, resetInkDay, resetBackgroundNight, resetInkNight;
+color quitButtonInk;
+color playColourBackground, playColourSymbol, playColourBackgroundActivated, playColourSymbolActivated;
+color quitBackground, quitBackgroundActivated;
+Boolean nightMode=false;
+//
+/*
+void settings() {
+ println(displayWidth, displayHeight);
+ int shorterSide = ( displayWidth > displayHeight ) ? displayHeight : displayWidth ; //Ternary Operator
+ shorterSide *= 0.9; //90%, WINDOW Frame
+ size(shorterSide, shorterSide); //ERROR IllegalStateException: cannot use a var in size()
+ println("Display Questions", displayWidth, displayHeight, shorterSide);
+ println("CANVAS Size Key Variables for setup()", width, height);
+ } //End settings
+ */
+void setup() {
+  //Display CANVAS
+  //size(); //width //height
+  fullScreen(); //displayWidth //displayHeight
+  appWidth = displayWidth;
+  appHeight = displayHeight;
   //
-  String musicDirectory = upArrow + musicFolder + normalFolder; //Concatenation
-  String soundEffectsDirectory = upArrow + musicFolder + soundEffectsFolder; //Concatenation
-  String file = musicDirectory + songName1 + fileExtension_mp3; //TO BE Rewritten and deleted once file is LOADED
-  playList[ currentSong ] = minim.loadFile( file ); //ERROR: Verify Spelling & Library installed, Sketch / Import Library
-  file = soundEffectsDirectory + soundEffect1 + fileExtension_mp3; //Rewritting FILE
-  soundEffects[currentSong] = minim.loadFile( file ); //ERROR: Verify Spelling & Library installed, Sketch / Import Library
+  divPopulation();
+  DIVs(); //See Buttons
+  musicButtonShapes();
+  nightMode=false; //initialization in setup() only
+  colourPopulation();
   //
-  //ERROR Check Music and Sound Effect Variables
-  //Thrown by commenting out FILE, playList[] or soundEffects[]
-  if ( playList[currentSong]==null || soundEffects[currentSong]==null) { //ERROR, play list is NULL
-    //See FILE or minim.loadFile
-    println("The Play List or Sound Effects did not load properly");
-    printArray(playList);
-    printArray(soundEffects);
-    /*
-  println("Music Pathway", musicDirectory);
-     println("Full Music File Pathway", file);
-     */
-  } //End ERROR Check Music and Sound Effect Variables
-  //
-
-
-
-
-
-
-// End Music Subprogram
+} //End setup
+//
+void draw() {
+  //println ("My Mouse is", mouseX, mouseY);
+  //println (playButton);
+  hoverOver_draw(); //See Buttons
+} //End draw
+//
+void mousePressed() {
+  //Quit Button: does not use Boolean, only mouseX&Y already present in system key variables
+  //CAUTION: must use if-elseIf-else or Clickable Screen will get confused
+  if ( mouseX>quitDivX && mouseX<quitDivX+quitDivWidth && mouseY>quitDivY &&mouseY<quitDivY+quitDivHeight ) {
+    quitButton(); //See Below
+  }
+} //End Mouse Pressed
+//
+void keyPressed() {
+  //Note, CAPs Lock on Code: key=='[CAP]' || key=='[lowerCase]'
+  //CAUTION: Order Matters
+  if (key=='Q' || key=='q') {
+    quitButton();  //See Below
+  } //Quit Button
+  if (key=='D' || key=='d') {
+    colourPopulation();
+  } //Night Mode
+} //End Key Pressed
+//
+//End MAIN Program
